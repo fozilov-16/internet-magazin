@@ -5,28 +5,47 @@ import { useNavigate } from "react-router-dom";
 import { axiosRequest } from './../../utils/axios';
 import { useFormik } from "formik";
 import { useAuthStore } from "../AuthStore";
+import * as Yup from "yup";
+
 
 export default function LogInPage() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate()
   const login = useAuthStore((state) => state.login);
+  const [loading, setLoading] = useState(false);
+
+
+  const validationSchema = Yup.object({
+    userName: Yup.string()
+      .min(3, "Minimum 3 characters")
+      .required("User name is required"),
+
+    password: Yup.string()
+      .min(3, "Minimum 3 characters")
+      .required("Password is required"),
+  });
 
   const LogIn = async (obj) => {
     try {
-      let { data } = await axiosRequest.post("/Account/login", obj)
-      console.log("LOGIN RESPONSE:", data);
-      login(data.token)
-      navigate("/home")
-    } catch (error) {
-      console.error(error);
-    }
-  }
+      setLoading(true);
+      let { data } = await axiosRequest.post("/Account/login", obj);
 
-  const { handleSubmit, handleChange, values } = useFormik({
+      login(data.token);
+      navigate("/home");
+    } catch (error) {
+      alert(error.response?.data?.message || "Login error");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+  const { handleSubmit, handleChange, values, errors, touched } = useFormik({
     initialValues: {
       userName: "",
       password: "",
     },
+    validationSchema,
     onSubmit: (values) => {
       LogIn(values);
     },
@@ -47,26 +66,41 @@ export default function LogInPage() {
               User Name
             </label>
             <input
-              type="text"
-              placeholder="Vali Valiev"
               name="userName"
+              type="text"
               value={values.userName}
               onChange={handleChange}
-              className="w-full mt-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-red-500"
+              className={`w-full mt-1 border rounded-md px-3 py-2 focus:outline-none ${errors.userName && touched.userName
+                ? "border-red-500"
+                : "border-gray-300"}`}
             />
+
+            {errors.userName && touched.userName && (
+              <p className="text-xs text-red-500 mt-1">
+                {errors.userName}
+              </p>
+            )}
+
           </div>
           <div className="mb-4 text-left relative">
             <label className="text-xs text-gray-500">
               Password
             </label>
             <input
-              type={showPassword ? "text" : "password"}
-              placeholder="********"
               name="password"
+              type={showPassword ? "text" : "password"}
               value={values.password}
               onChange={handleChange}
-              className="w-full mt-1 border border-gray-300 rounded-md px-3 py-2 pr-10 focus:outline-none focus:ring-1 focus:ring-red-500"
+              className={`w-full mt-1 border rounded-md px-3 py-2 pr-10 focus:outline-none ${errors.password && touched.password
+                ? "border-red-500"
+                : "border-gray-300"}`}
             />
+
+            {errors.password && touched.password && (
+              <p className="text-xs text-red-500 mt-1">
+                {errors.password}
+              </p>
+            )}
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
@@ -80,9 +114,16 @@ export default function LogInPage() {
               Forget Password?
             </a>
           </div>
-          <button className="w-full bg-red-500 hover:bg-red-600 text-white py-3 rounded-md transition">
-            Log In
+          <button
+            type="submit"
+            disabled={loading}
+            className={`w-full py-3 rounded-md transition text-white ${loading
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-red-500 hover:bg-red-600"}`}
+          >
+            {loading ? "Loading..." : "Log In"}
           </button>
+
         </form>
       </div>
     </div>
