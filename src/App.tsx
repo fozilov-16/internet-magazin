@@ -1,9 +1,73 @@
-import React from 'react'
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import LogInPage from "./pages/LogInPage"
+import MainLayout from './MainLayout';
+import ContactPage from "./pages/ContactPage";
+import AboutPage from "./pages/AboutPage";
+import AccountPage from "./pages/AccountPage";
+import CartPage from "./pages/CartPage";
+import CheckoutPage from "./pages/CheckoutPage";
+import { Home } from "lucide-react";
+import HomePage from "./pages/HomePage";
+import ProductsPage from "./pages/ProductsPage";
+import ProductDetailPage from "./pages/ProductDetailPage";
+import RegirstPage from "./pages/RegirstPage";
+import WishlistPage from "./pages/WishlistPage";
 
-const App = () => {
+export default function App() {
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <MainLayout />,
+      children: [
+        {
+          index: true,
+          element: <LogInPage />
+        },
+        {
+          path: "/sign/up",
+          element: <RegirstPage />
+        },
+        {
+          path: "/contact",
+          element: <ContactPage />
+        },
+        {
+          path: "/about",
+          element: <AboutPage />
+        },
+        {
+          path: "/account",
+          element: <AccountPage />
+        },
+        {
+          path: "/cart",
+          element: <CartPage />
+        },
+        {
+          path: "/chekout",
+          element: <CheckoutPage />
+        },
+        {
+          path: "/home",
+          element: <HomePage />
+        },
+        {
+          path: "/products",
+          element: <ProductsPage />
+        },
+        {
+          path: "/products/details",
+          element: <ProductDetailPage />
+        },
+        {
+          path: "/wishlist",
+          element: <WishlistPage />
+        },
+      ]
+    }
+  ])
+
   return (
-    <div>App</div>
+    <RouterProvider router={router} />
   )
 }
-
-export default App
