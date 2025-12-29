@@ -1,7 +1,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Pagination, Autoplay, Navigation } from 'swiper/modules'
-import 'swiper/css'
-import 'swiper/css/pagination'
+import 'swiper/css';
+import 'swiper/css/pagination';
 import photo1 from '../assets/images/hero_endframe__cvklg0xk3w6e_large 2.png'
 import appleLogo from '../assets/images/1200px-Apple_gray_logo 1.png'
 import ArrowRightAltOutlinedIcon from '@mui/icons-material/ArrowRightAltOutlined';
@@ -18,12 +18,27 @@ import photo3 from '../assets/images/macbook.jpg'
 import photo4 from '../assets/images/airpods.jpg'
 import photo5 from '../assets/images/ipad.jpg'
 
+type Product = {
+  id: number;
+  image: string;
+  productName: string;
+  price: number;
+  discountPrice?: number;
+  quantity: number;
+};
+
+type Category = {
+  id: number;
+  categoryName: string;
+  categoryImage: string;
+};
+
 export default function HomePage() {
-  const [products, setProducts] = useState([])
+  const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-  const [value, setValue] = useState(2);
-  const [categories, setCategories] = useState([]);
+  const [error, setError] = useState<string | null>(null)
+  const [value, setValue] = useState<number | null>(2);
+  const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
     Promise.all([GetTodo(), GetCategory()])
@@ -194,7 +209,7 @@ export default function HomePage() {
                       <Rating
                         name="simple-controlled"
                         value={value}
-                        onChange={(event, newValue) => {
+                        onChange={(_, newValue) => {
                           setValue(newValue);
                         }}
                       />
@@ -329,7 +344,7 @@ export default function HomePage() {
                       <Rating
                         name="simple-controlled"
                         value={value}
-                        onChange={(event, newValue) => {
+                        onChange={(_, newValue) => {
                           setValue(newValue);
                         }}
                       />
@@ -430,7 +445,7 @@ export default function HomePage() {
                       <Rating
                         name="simple-controlled"
                         value={value}
-                        onChange={(event, newValue) => {
+                        onChange={(_, newValue) => {
                           setValue(newValue);
                         }}
                       />

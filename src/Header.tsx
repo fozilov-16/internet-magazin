@@ -22,7 +22,7 @@ import {
 export default function Header() {
     const [open, setOpen] = useState(false);
 
-    const toggleDrawer = (state) => () => {
+    const toggleDrawer = (state: boolean) => () => {
         setOpen(state);
     };
 

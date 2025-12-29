@@ -1,5 +1,10 @@
+type AboutServiceProps = {
+    img: string;
+    num: number | string;
+    desc: string;
+};
 
-export default function Aboutservice({ img, num, desc }) {
+export default function Aboutservice({ img, num, desc }: AboutServiceProps) {
     return (
         <div>
             <div className='w-[250px] h-[230px] border-[solid border-[1px] border-[#0000004D] flex items-center flex-col justify-center gap-[24px]'>
