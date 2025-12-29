@@ -87,7 +87,6 @@ export default function RegisterPage() {
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Username */}
           <div>
             <label className="block text-xs text-gray-500 mb-1">User Name</label>
             <input
@@ -100,8 +99,6 @@ export default function RegisterPage() {
               <p className="text-xs text-red-500 mt-1">{errors.userName}</p>
             )}
           </div>
-
-          {/* Email */}
           <div>
             <label className="block text-xs text-gray-500 mb-1">Email</label>
             <input
@@ -114,8 +111,6 @@ export default function RegisterPage() {
               <p className="text-xs text-red-500 mt-1">{errors.email}</p>
             )}
           </div>
-
-          {/* Phone Number */}
           <div>
             <label className="block text-xs text-gray-500 mb-1">Phone Number</label>
             <input
@@ -128,8 +123,6 @@ export default function RegisterPage() {
               <p className="text-xs text-red-500 mt-1">{errors.phoneNumber}</p>
             )}
           </div>
-
-          {/* Password */}
           <div>
             <label className="block text-xs text-gray-500 mb-1">Password</label>
             <input
@@ -143,8 +136,6 @@ export default function RegisterPage() {
               <p className="text-xs text-red-500 mt-1">{errors.password}</p>
             )}
           </div>
-
-          {/* Confirm Password */}
           <div>
             <label className="block text-xs text-gray-500 mb-1">Confirm Password</label>
             <input
