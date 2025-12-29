@@ -72,10 +72,10 @@ export default function Header() {
                     <img src={logo} alt="logo" className="hidden md:block" />
                 </div>
                 <nav className="hidden md:flex gap-8 text-sm">
-                    <Link to="/home">Home</Link>
-                    <Link to="/contact">Contact</Link>
-                    <Link to="/about">About</Link>
-                    <Link to="/signup" className="font-semibold">Sign Up</Link>
+                    <Link to="/home" className="cursor-pointer">Home</Link>
+                    <Link to="/contact" className="cursor-pointer">Contact</Link>
+                    <Link to="/about" className="cursor-pointer">About</Link>
+                    <Link to="/" className="font-semibold cursor-pointer">Sign Up</Link>
                 </nav>
                 <div className="flex items-center gap-4">
                     <input

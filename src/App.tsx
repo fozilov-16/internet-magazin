@@ -21,6 +21,10 @@ export default function App() {
       children: [
         {
           index: true,
+          element: <RegirstPage />
+        },
+        {
+          path: "/login",
           element: <LogInPage />
         }
       ]
@@ -28,10 +32,6 @@ export default function App() {
     {
       element: <MainLayout />,
       children: [
-        {
-          path: "/sign/up",
-          element: <RegirstPage />
-        },
         {
           path: "/contact",
           element: <ContactPage />
