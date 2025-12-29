@@ -7,9 +7,9 @@ import appleLogo from '../assets/images/1200px-Apple_gray_logo 1.png'
 import ArrowRightAltOutlinedIcon from '@mui/icons-material/ArrowRightAltOutlined';
 import ArrowForwardOutlinedIcon from '@mui/icons-material/ArrowForwardOutlined';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
-import { GetTodo } from '../../api/api'
+import { api, GetCategory, GetTodo } from '../../api/api'
 import { useEffect, useState } from 'react'
-import { Skeleton, Button } from '@mui/material'
+import { Skeleton, Button, Rating } from '@mui/material'
 import photo2 from '../assets/images/JBL_BOOMBOX_2_HERO_020_x1 (1) 1.png'
 import logo1 from '../assets/images/Services.png'
 import logo2 from '../assets/images/Services (1).png'
@@ -22,18 +22,22 @@ export default function HomePage() {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [value, setValue] = useState(2);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    GetTodo()
-      .then((data) => {
-        setProducts(data)
-        setLoading(false)
+    Promise.all([GetTodo(), GetCategory()])
+      .then(([productsData, categoriesData]) => {
+        setProducts(productsData);
+        setCategories(categoriesData);
+        setLoading(false);
       })
       .catch(() => {
-        setError("Ошибка загрузки данных")
-        setLoading(false)
-      })
-  }, [])
+        setError("Ошибка загрузки данных");
+        setLoading(false);
+      });
+  }, []);
+
 
   return (
     <div className="mx-auto max-w-7xl py-9">
@@ -146,7 +150,7 @@ export default function HomePage() {
             <ArrowForwardOutlinedIcon />
           </div>
         </div>
-        <div className="mt-[40px]">
+        <div className="mt-[40px] p-6">
           {loading && (
             <div className="grid grid-cols-4 gap-6">
               {Array(4)
@@ -165,7 +169,6 @@ export default function HomePage() {
           {!loading && !error && (
             <Swiper
               modules={[Navigation]}
-              navigation
               spaceBetween={20}
               slidesPerView={4}
               className="py-4"
@@ -174,12 +177,12 @@ export default function HomePage() {
                 <SwiperSlide key={prod.id}>
                   <div className="relative p-4 border rounded-lg shadow-md group">
                     <img
-                      src={prod.image}
+                      src={`${api}/images/${prod.image}`}
                       alt={prod.productName}
-                      className="w-full h-40 object-contain"
+                      className="w-full h-40 mb-[50px]"
                     />
                     <p className="mt-2 font-semibold text-lg">{prod.productName}</p>
-                    <div className="flex justify-between mt-1">
+                    <div className="flex gap-[12px] mt-1">
                       <p className="text-red-600 font-bold">
                         ${prod.discountPrice || prod.price}
                       </p>
@@ -187,11 +190,20 @@ export default function HomePage() {
                         <p className="line-through text-gray-400">${prod.price}</p>
                       )}
                     </div>
-                    <p className="mt-1 text-gray-500">Qty: {prod.quantity}</p>
+                    <div className="mt-1 text-gray-500 flex items-center mt-[20px]">
+                      <Rating
+                        name="simple-controlled"
+                        value={value}
+                        onChange={(event, newValue) => {
+                          setValue(newValue);
+                        }}
+                      />
+                      ({prod.quantity})
+                    </div>
                     <Button
                       variant="contained"
-                      color="error"
-                      className="absolute bottom-4 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity"
+                      color='inherit'
+                      className="absolute bottom-4 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity top-[-140px] w-full"
                     >
                       Add To Cart
                     </Button>
@@ -236,36 +248,21 @@ export default function HomePage() {
           {!loading && !error && (
             <Swiper
               modules={[Navigation]}
-              navigation
               spaceBetween={20}
-              slidesPerView={4}
+              slidesPerView={6}
               className="py-4"
             >
-              {products.map((prod) => (
-                <SwiperSlide key={prod.id}>
-                  <div className="relative p-4 border rounded-lg shadow-md group">
+              {categories.map((cat) => (
+                <SwiperSlide key={cat.id}>
+                  <div className="flex flex-col items-center justify-center border rounded-md p-6 cursor-pointer hover:bg-[#DB4444] hover:text-white transition group h-[145px]">
                     <img
-                      src={prod.image}
-                      alt={prod.productName}
-                      className="w-full h-40 object-contain"
+                      src={`${api}/images/${cat.categoryImage}`}
+                      alt={cat.categoryName}
+                      className="w-[56px] h-[56px] mb-4"
                     />
-                    <p className="mt-2 font-semibold text-lg">{prod.productName}</p>
-                    <div className="flex justify-between mt-1">
-                      <p className="text-red-600 font-bold">
-                        ${prod.discountPrice || prod.price}
-                      </p>
-                      {prod.discountPrice && (
-                        <p className="line-through text-gray-400">${prod.price}</p>
-                      )}
-                    </div>
-                    <p className="mt-1 text-gray-500">Qty: {prod.quantity}</p>
-                    <Button
-                      variant="contained"
-                      color="error"
-                      className="absolute bottom-4 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity"
-                    >
-                      Add To Cart
-                    </Button>
+                    <p className="text-[16px] font-medium text-center">
+                      {cat.categoryName}
+                    </p>
                   </div>
                 </SwiperSlide>
               ))}
@@ -288,7 +285,7 @@ export default function HomePage() {
             <ArrowForwardOutlinedIcon />
           </div>
         </div>
-        <div className="mt-[40px]">
+        <div className="mt-[40px] p-6">
           {loading && (
             <div className="grid grid-cols-4 gap-6">
               {Array(4)
@@ -307,7 +304,6 @@ export default function HomePage() {
           {!loading && !error && (
             <Swiper
               modules={[Navigation]}
-              navigation
               spaceBetween={20}
               slidesPerView={4}
               className="py-4"
@@ -316,12 +312,12 @@ export default function HomePage() {
                 <SwiperSlide key={prod.id}>
                   <div className="relative p-4 border rounded-lg shadow-md group">
                     <img
-                      src={prod.image}
+                      src={`${api}/images/${prod.image}`}
                       alt={prod.productName}
-                      className="w-full h-40 object-contain"
+                      className="w-full h-40 mb-[50px]"
                     />
                     <p className="mt-2 font-semibold text-lg">{prod.productName}</p>
-                    <div className="flex justify-between mt-1">
+                    <div className="flex gap-[12px] mt-1">
                       <p className="text-red-600 font-bold">
                         ${prod.discountPrice || prod.price}
                       </p>
@@ -329,11 +325,20 @@ export default function HomePage() {
                         <p className="line-through text-gray-400">${prod.price}</p>
                       )}
                     </div>
-                    <p className="mt-1 text-gray-500">Qty: {prod.quantity}</p>
+                    <div className="mt-1 text-gray-500 flex items-center mt-[20px]">
+                      <Rating
+                        name="simple-controlled"
+                        value={value}
+                        onChange={(event, newValue) => {
+                          setValue(newValue);
+                        }}
+                      />
+                      ({prod.quantity})
+                    </div>
                     <Button
                       variant="contained"
-                      color="error"
-                      className="absolute bottom-4 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity"
+                      color='inherit'
+                      className="absolute bottom-4 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity top-[-140px] w-full"
                     >
                       Add To Cart
                     </Button>
@@ -381,7 +386,7 @@ export default function HomePage() {
         <div className='mt-[30px] flex justify-between items-center'>
           <p className='text-[36px] font-semibold'>Explore Our Products</p>
         </div>
-        <div className="mt-[40px]">
+        <div className="mt-[40px] p-6">
           {loading && (
             <div className="grid grid-cols-4 gap-6">
               {Array(4)
@@ -398,17 +403,22 @@ export default function HomePage() {
           )}
           {error && <p className="text-red-600 text-center">{error}</p>}
           {!loading && !error && (
-            <div>
-              {
-                products.map((prod) => (
+            <Swiper
+              modules={[Navigation]}
+              spaceBetween={20}
+              slidesPerView={4}
+              className="py-4"
+            >
+              {products.map((prod) => (
+                <SwiperSlide key={prod.id}>
                   <div className="relative p-4 border rounded-lg shadow-md group">
                     <img
-                      src={prod.image}
+                      src={`${api}/images/${prod.image}`}
                       alt={prod.productName}
-                      className="w-full h-40 object-contain"
+                      className="w-full h-40 mb-[50px]"
                     />
                     <p className="mt-2 font-semibold text-lg">{prod.productName}</p>
-                    <div className="flex justify-between mt-1">
+                    <div className="flex gap-[12px] mt-1">
                       <p className="text-red-600 font-bold">
                         ${prod.discountPrice || prod.price}
                       </p>
@@ -416,18 +426,27 @@ export default function HomePage() {
                         <p className="line-through text-gray-400">${prod.price}</p>
                       )}
                     </div>
-                    <p className="mt-1 text-gray-500">Qty: {prod.quantity}</p>
+                    <div className="mt-1 text-gray-500 flex items-center mt-[20px]">
+                      <Rating
+                        name="simple-controlled"
+                        value={value}
+                        onChange={(event, newValue) => {
+                          setValue(newValue);
+                        }}
+                      />
+                      ({prod.quantity})
+                    </div>
                     <Button
                       variant="contained"
-                      color="error"
-                      className="absolute bottom-4 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity"
+                      color='inherit'
+                      className="absolute bottom-4 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity top-[-140px] w-full"
                     >
                       Add To Cart
                     </Button>
                   </div>
-                ))
-              }
-            </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
           )}
           <div className='mt-[32px] flex justify-center'>
             <button className=' bg-[#DB4444] cursor-pointer rounded-[4px] px-[48px] py-[16px] text-white'>View All Products</button>

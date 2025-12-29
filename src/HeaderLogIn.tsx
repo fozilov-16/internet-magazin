@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom"
 import logo from './assets/images/Group 1116606595.png'
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -11,8 +10,8 @@ export default function HeaderLogin() {
                     <img src={logo} alt="" />
                 </div>
                 <nav className="hidden md:flex gap-8 text-sm">
-                    <Link to="/home"><button className="cursor-pointer">Home</button></Link>
-                    <Link to="/contact"><button className="cursor-pointer">Contact</button></Link>
+                    <button className="cursor-pointer">Home</button>
+                    <button className="cursor-pointer">Contact</button>
                     <button>About</button>
                     <button className="font-semibold">Sign Up</button>
                 </nav>
