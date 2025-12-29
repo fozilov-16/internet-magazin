@@ -6,6 +6,12 @@ import { axiosRequest, SaveToken } from './../../utils/axios';
 import { useFormik } from "formik";
 import { useAuthStore } from "../AuthStore";
 import * as Yup from "yup";
+import axios from "axios";
+
+type LoginPayload = {
+  userName: string;
+  password: string;
+};
 
 
 export default function LogInPage() {
@@ -25,7 +31,7 @@ export default function LogInPage() {
       .required("Password is required"),
   });
 
-  const LogIn = async (obj) => {
+  const LogIn = async (obj: LoginPayload) => {
     try {
       setLoading(true);
       let { data } = await axiosRequest.post("/Account/login", obj);
@@ -34,11 +40,15 @@ export default function LogInPage() {
       login(data.data)
       navigate("/home");
     } catch (error) {
-      alert(error.response?.data?.message || "Login error");
+      if (axios.isAxiosError(error)) {
+        alert(error.response?.data?.message || "Login error");
+      } else {
+        alert("Unexpected error");
+      }
     } finally {
       setLoading(false);
     }
-  };
+  }
 
 
   const { handleSubmit, handleChange, values, errors, touched } = useFormik({
@@ -107,7 +117,7 @@ export default function LogInPage() {
               onClick={() => setShowPassword(!showPassword)}
               className="absolute right-3 top-9 text-gray-400"
             >
-              {showPassword ? <RemoveRedEyeIcon size={18} /> : <VisibilityOffIcon size={18} />}
+              {showPassword ? <RemoveRedEyeIcon sx={{ fontSize: 18 }} /> : <VisibilityOffIcon sx={{ fontSize: 18 }} />}
             </button>
           </div>
           <div className="mb-6">
@@ -128,5 +138,5 @@ export default function LogInPage() {
         </form>
       </div>
     </div>
-  );
+  )
 }
