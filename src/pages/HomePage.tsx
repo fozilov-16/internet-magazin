@@ -57,16 +57,15 @@ export default function HomePage() {
   return (
     <div className="mx-auto max-w-7xl py-9">
       <div className="md:flex items-center justify-around">
-        <div className="space-y-[16px] text-sm flex gap-10 flex-wrap p-5 md:block">
-          <p className='font-semibold text-[16px]'>Woman’s Fashion</p>
-          <p className='font-semibold text-[16px]'>Men’s Fashion</p>
-          <p className='font-semibold text-[16px]'>Electronics</p>
-          <p className='font-semibold text-[16px]'>Home & Lifestyle</p>
-          <p className='font-semibold text-[16px]'>Medicine</p>
-          <p className='font-semibold text-[16px]'>Sports & Outdoor</p>
-          <p className='font-semibold text-[16px]'>Baby’s & Toys</p>
-          <p className='font-semibold text-[16px]'>Groceries & Pets</p>
-          <p className='font-semibold text-[16px]'>Health & Beauty</p>
+        <div>
+          {categories?.slice(0, 9).map((cat) => {
+            return (
+              <div className="text-sm flex gap-10 flex-wrap p-3 md:block">
+                <p className='font-semibold text-[16px]'>{cat.categoryName}</p>
+              </div>
+            )
+          })
+          }
         </div>
         <div>
           <Swiper
@@ -194,7 +193,7 @@ export default function HomePage() {
                     <img
                       src={`${api}/images/${prod.image}`}
                       alt={prod.productName}
-                      className="w-full h-40 mb-[50px]"
+                      className="w-full h-40 mb-[50px] object-cover"
                     />
                     <p className="mt-2 font-semibold text-lg">{prod.productName}</p>
                     <div className="flex gap-[12px] mt-1">
@@ -329,7 +328,7 @@ export default function HomePage() {
                     <img
                       src={`${api}/images/${prod.image}`}
                       alt={prod.productName}
-                      className="w-full h-40 mb-[50px]"
+                      className="w-full h-40 mb-[50px] object-cover"
                     />
                     <p className="mt-2 font-semibold text-lg">{prod.productName}</p>
                     <div className="flex gap-[12px] mt-1">
@@ -430,7 +429,7 @@ export default function HomePage() {
                     <img
                       src={`${api}/images/${prod.image}`}
                       alt={prod.productName}
-                      className="w-full h-40 mb-[50px]"
+                      className="w-full h-40 mb-[50px] object-cover"
                     />
                     <p className="mt-2 font-semibold text-lg">{prod.productName}</p>
                     <div className="flex gap-[12px] mt-1">
