@@ -6,23 +6,28 @@ import AboutPage from "./pages/AboutPage";
 import AccountPage from "./pages/AccountPage";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
-import { Home } from "lucide-react";
 import HomePage from "./pages/HomePage";
 import ProductsPage from "./pages/ProductsPage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import RegirstPage from "./pages/RegirstPage";
 import WishlistPage from "./pages/WishlistPage";
+import './App.css'
+import AuthLayout from "./AuthLayout";
 
 export default function App() {
   const router = createBrowserRouter([
     {
-      path: "/",
-      element: <MainLayout />,
+      element: <AuthLayout />,
       children: [
         {
           index: true,
           element: <LogInPage />
-        },
+        }
+      ]
+    },
+    {
+      element: <MainLayout />,
+      children: [
         {
           path: "/sign/up",
           element: <RegirstPage />

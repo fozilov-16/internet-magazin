@@ -2,7 +2,7 @@ import { useState } from "react";
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useNavigate } from "react-router-dom";
-import { axiosRequest } from './../../utils/axios';
+import { axiosRequest, SaveToken } from './../../utils/axios';
 import { useFormik } from "formik";
 import { useAuthStore } from "../AuthStore";
 import * as Yup from "yup";
@@ -29,8 +29,9 @@ export default function LogInPage() {
     try {
       setLoading(true);
       let { data } = await axiosRequest.post("/Account/login", obj);
-
-      login(data.token);
+      console.log("LOGIN RESPONSE:", data);
+      SaveToken(data.data)
+      login(data.data)
       navigate("/home");
     } catch (error) {
       alert(error.response?.data?.message || "Login error");
