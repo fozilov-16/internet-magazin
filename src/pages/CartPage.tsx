@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { GetCart, CartProduct, api } from "../../api/api";
+import { GetCart, CartProduct, api, DeleteProductFromCart, DeleteAllFromCart } from "../../api/api";
 import { useNavigate } from "react-router-dom";
 
 export default function CartPage() {
@@ -7,14 +7,13 @@ export default function CartPage() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate()
 
-  useEffect(() => {
-    GetCart()
-      .then((data) => {
-        setCart(data);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, []);
+
+  const loadCart = async () => {
+    setLoading(true);
+    const data = await GetCart();
+    setCart(data);
+    setLoading(false);
+  };
 
   const subtotal = cart.reduce(
     (sum, item) =>
@@ -22,6 +21,9 @@ export default function CartPage() {
     0
   );
 
+  useEffect(() => {
+    loadCart()
+  }, []);
 
 
   if (loading) return <p className="text-center py-10">Loading...</p>;
@@ -63,7 +65,12 @@ export default function CartPage() {
               $
               {(item.product.discountPrice ?? item.product.price) *
                 item.quantity}
-              <button className="text-red-500 font-bold">×</button>
+              <button className="text-red-500 font-bold cursor-pointer"
+                onClick={async () => {
+                  await DeleteProductFromCart(item.id)
+                  loadCart()
+                }}
+              >×</button>
             </div>
           </div>
         ))}
@@ -72,12 +79,18 @@ export default function CartPage() {
         <button className="cursor-pointer border px-6 py-2 rounded" onClick={() => navigate("/home")}>
           Return To Shop
         </button>
-
         <div className="flex gap-4">
-          <button className="border px-6 py-2 rounded">
+          <button className="border px-6 py-2 rounded cursor-pointer"
+            onClick={loadCart}
+          >
             Update Cart
           </button>
-          <button className="border border-red-500 text-red-500 px-6 py-2 rounded">
+          <button className="border border-red-500 text-red-500 px-6 py-2 rounded cursor-pointer"
+            onClick={async () => {
+              await DeleteAllFromCart();
+              loadCart();
+            }}
+          >
             Remove all
           </button>
         </div>

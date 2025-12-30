@@ -47,3 +47,21 @@ export const GetCart = async (): Promise<CartProduct[]> => {
   const { data } = await axiosRequest.get("/Cart/get-products-from-cart");
   return data.data[0].productsInCart;
 };
+
+export const DeleteProductFromCart = async (id: number) => {
+  try {
+    await axiosRequest.delete(`/Cart/delete-product-from-cart?id=${id}`);
+    GetCart();
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const DeleteAllFromCart = async (): Promise<void> => {
+  try {
+    await axiosRequest.delete(`/Cart/clear-cart`);
+    GetCart();
+  } catch (error) {
+    console.error(error);
+  }
+};
