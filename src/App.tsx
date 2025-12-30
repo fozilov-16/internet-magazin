@@ -61,7 +61,7 @@ export default function App() {
           element: <ProductsPage />
         },
         {
-          path: "/products/details",
+          path: "/productDetails",
           element: <ProductDetailPage />
         },
         {
