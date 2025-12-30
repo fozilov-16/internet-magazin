@@ -1,5 +1,5 @@
 import { Checkbox, Radio, Slider, InputNumber, Button } from "antd";
-// import { DownOutlined } from "@ant-design/icons";
+import { DownOutlined } from "@ant-design/icons";
 import { useState } from "react";
 
 const ProductsFilter = () => {
@@ -10,8 +10,7 @@ const ProductsFilter = () => {
         
       <div>
         <div className="flex justify-between items-center font-semibold mb-3">
-          Category
-           {/* <DownOutlined /> */}
+          Category <DownOutlined />
         </div>
 
         <div className="flex flex-col gap-2 text-sm">
@@ -28,8 +27,7 @@ const ProductsFilter = () => {
 
       <div>
         <div className="flex justify-between items-center font-semibold mb-3">
-          Brands
-           {/* <DownOutlined /> */}
+          Brands <DownOutlined />
         </div>
 
         <Checkbox.Group className="flex flex-col gap-2">
@@ -49,8 +47,7 @@ const ProductsFilter = () => {
 
       <div>
         <div className="flex justify-between items-center font-semibold mb-3">
-          Features
-           {/* <DownOutlined /> */}
+          Features <DownOutlined />
         </div>
 
         <Checkbox.Group className="flex flex-col gap-2">
@@ -70,8 +67,7 @@ const ProductsFilter = () => {
 
       <div>
         <div className="flex justify-between items-center font-semibold mb-3">
-          Price range
-           {/* <DownOutlined /> */}
+          Price range <DownOutlined />
         </div>
 
         <Slider
@@ -112,8 +108,7 @@ const ProductsFilter = () => {
 
       <div>
         <div className="flex justify-between items-center font-semibold mb-3">
-          Condition
-           {/* <DownOutlined /> */}
+          Condition <DownOutlined />
         </div>
 
         <Radio.Group className="flex flex-col gap-2" defaultValue="any">
@@ -128,8 +123,7 @@ const ProductsFilter = () => {
 
       <div>
         <div className="flex justify-between items-center font-semibold mb-3">
-          Ratings
-           {/* <DownOutlined /> */}
+          Ratings <DownOutlined />
         </div>
 
         <Checkbox.Group className="flex flex-col gap-2">
