@@ -64,7 +64,7 @@ export default function HomePage() {
           {categories?.slice(0, 9).map((cat) => {
             return (
               <div className="text-sm flex gap-10 flex-wrap p-3 md:block">
-                <p className='font-semibold text-[16px] cursor-pointer'>{cat.categoryName}</p>
+                <p className='font-semibold text-[16px]'>{cat.categoryName}</p>
               </div>
             )
           })
@@ -288,9 +288,7 @@ export default function HomePage() {
             </Swiper>
           )}
           <div className='mt-[32px] flex justify-center'>
-            <NavLink to={"/products"}>
-              <button className=' bg-[#DB4444] cursor-pointer rounded-[4px] px-[48px] py-[16px] text-white'>View All Products</button>
-            </NavLink>
+            <button className=' bg-[#DB4444] cursor-pointer rounded-[4px] px-[48px] py-[16px] text-white'>View All Products</button>
           </div>
         </div>
       </div>
