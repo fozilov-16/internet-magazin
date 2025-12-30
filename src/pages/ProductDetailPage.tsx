@@ -44,7 +44,7 @@ const ProductDetailPage = () => {
         setProducts(filtered);
       }
       catch (error) {
-        setError("Failed to load related products", error);
+        setError("Failed to load related products");
       }
       finally {
         setLoading(false);
