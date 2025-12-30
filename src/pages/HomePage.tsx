@@ -1,3 +1,4 @@
+// Ismoil
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Pagination, Autoplay, Navigation } from 'swiper/modules'
 import 'swiper/css';
@@ -17,6 +18,8 @@ import logo3 from '../assets/images/Services (2).png'
 import photo3 from '../assets/images/macbook.jpg'
 import photo4 from '../assets/images/airpods.jpg'
 import photo5 from '../assets/images/ipad.jpg'
+
+import { NavLink, Outlet } from 'react-router-dom';
 
 type Product = {
   id: number;
@@ -61,7 +64,7 @@ export default function HomePage() {
           {categories?.slice(0, 9).map((cat) => {
             return (
               <div className="text-sm flex gap-10 flex-wrap p-3 md:block">
-                <p className='font-semibold text-[16px]'>{cat.categoryName}</p>
+                <p className='font-semibold text-[16px] cursor-pointer'>{cat.categoryName}</p>
               </div>
             )
           })
@@ -227,7 +230,9 @@ export default function HomePage() {
             </Swiper>
           )}
           <div className='mt-[32px] flex justify-center'>
-            <button className=' bg-[#DB4444] cursor-pointer rounded-[4px] px-[48px] py-[16px] text-white'>View All Products</button>
+            <NavLink to={"/products"}>
+              <button className=' bg-[#DB4444] cursor-pointer rounded-[4px] px-[48px] py-[16px] text-white'>View All Products</button>
+            </NavLink>
           </div>
         </div>
       </div>
@@ -283,7 +288,9 @@ export default function HomePage() {
             </Swiper>
           )}
           <div className='mt-[32px] flex justify-center'>
-            <button className=' bg-[#DB4444] cursor-pointer rounded-[4px] px-[48px] py-[16px] text-white'>View All Products</button>
+            <NavLink to={"/products"}>
+              <button className=' bg-[#DB4444] cursor-pointer rounded-[4px] px-[48px] py-[16px] text-white'>View All Products</button>
+            </NavLink>
           </div>
         </div>
       </div>
@@ -362,7 +369,9 @@ export default function HomePage() {
             </Swiper>
           )}
           <div className='mt-[32px] flex justify-center'>
-            <button className=' bg-[#DB4444] cursor-pointer rounded-[4px] px-[48px] py-[16px] text-white'>View All Products</button>
+            <NavLink to={"/products"}>
+              <button className=' bg-[#DB4444] cursor-pointer rounded-[4px] px-[48px] py-[16px] text-white'>View All Products</button>
+            </NavLink>
           </div>
         </div>
       </div>
@@ -463,7 +472,9 @@ export default function HomePage() {
             </Swiper>
           )}
           <div className='mt-[32px] flex justify-center'>
-            <button className=' bg-[#DB4444] cursor-pointer rounded-[4px] px-[48px] py-[16px] text-white'>View All Products</button>
+            <NavLink to={"/products"}>
+              <button className=' bg-[#DB4444] cursor-pointer rounded-[4px] px-[48px] py-[16px] text-white'>View All Products</button>
+            </NavLink>
           </div>
         </div>
       </div>
@@ -521,6 +532,7 @@ export default function HomePage() {
           </div>
         </div>
       </div>
+      <Outlet/>
     </div>
   )
 }

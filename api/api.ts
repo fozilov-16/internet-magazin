@@ -19,3 +19,12 @@ export const GetCategory = async () => {
     throw error;
   }
 };
+
+export const getProductById = async (id) => {
+  try {
+    const { data } = await axiosRequest.get(`${api}/get-product-by-id?id=${id}`);
+    return data.data.product;
+  } catch (error) {
+    console.error(error)
+  }
+}
