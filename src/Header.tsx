@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "./assets/images/Group 1116606595.png";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -21,6 +21,7 @@ import {
 
 export default function Header() {
     const [open, setOpen] = useState(false);
+    const navigate = useNavigate()
 
     const toggleDrawer = (state: boolean) => () => {
         setOpen(state);
@@ -84,12 +85,9 @@ export default function Header() {
                         className="hidden md:block border rounded-md px-3 py-1 text-sm outline-none"
                     />
                     <FavoriteBorderIcon />
-                    <span className="relative">
-                        <ShoppingCartOutlinedIcon />
-                        <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1 rounded-full">
-                            2
-                        </span>
-                    </span>
+                    <div>
+                        <button onClick={() => navigate("/cart")} className="cursor-pointer"><ShoppingCartOutlinedIcon /></button>
+                    </div>
                     <PersonOutlineOutlinedIcon />
                 </div>
             </div>

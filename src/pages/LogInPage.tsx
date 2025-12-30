@@ -35,7 +35,6 @@ export default function LogInPage() {
     try {
       setLoading(true);
       let { data } = await axiosRequest.post("/Account/login", obj);
-      console.log("LOGIN RESPONSE:", data);
       SaveToken(data.data)
       login(data.data)
       navigate("/home");
