@@ -8,7 +8,7 @@ import appleLogo from '../assets/images/1200px-Apple_gray_logo 1.png'
 import ArrowRightAltOutlinedIcon from '@mui/icons-material/ArrowRightAltOutlined';
 import ArrowForwardOutlinedIcon from '@mui/icons-material/ArrowForwardOutlined';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
-import { api, GetCategory, GetTodo } from '../../api/api'
+import { AddToCart, api, GetCategory, GetTodo } from '../../api/api'
 import { useEffect, useState } from 'react'
 import { Skeleton, Button, Rating } from '@mui/material'
 import photo2 from '../assets/images/JBL_BOOMBOX_2_HERO_020_x1 (1) 1.png'
@@ -42,6 +42,16 @@ export default function HomePage() {
   const [error, setError] = useState<string | null>(null)
   const [value, setValue] = useState<number | null>(2);
   const [categories, setCategories] = useState<Category[]>([]);
+
+  const handleAddToCart = async (productId: number) => {
+    try {
+      await AddToCart(productId);
+      alert("Товар добавлен в корзину ✅");
+    } catch (error) {
+      alert("Этот товар уже находится в корзине ❌");
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     Promise.all([GetTodo(), GetCategory()])
@@ -169,7 +179,7 @@ export default function HomePage() {
         </div>
         <div className="mt-[40px] p-6">
           {loading && (
-            <div className="grid grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               {Array(4)
                 .fill(0)
                 .map((_, idx) => (
@@ -187,7 +197,12 @@ export default function HomePage() {
             <Swiper
               modules={[Navigation]}
               spaceBetween={20}
-              slidesPerView={4}
+              slidesPerView={1}
+              breakpoints={{
+                768: {
+                  slidesPerView: 4,
+                },
+              }}
               className="py-4"
             >
               {products.map((prod) => (
@@ -220,6 +235,7 @@ export default function HomePage() {
                     <Button
                       variant="contained"
                       color='inherit'
+                      onClick={() => handleAddToCart(prod.id)}
                       className="absolute bottom-4 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity top-[-140px] w-full"
                     >
                       Add To Cart
@@ -250,7 +266,7 @@ export default function HomePage() {
         </div>
         <div className="mt-[40px]">
           {loading && (
-            <div className="grid grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               {Array(4)
                 .fill(0)
                 .map((_, idx) => (
@@ -268,7 +284,12 @@ export default function HomePage() {
             <Swiper
               modules={[Navigation]}
               spaceBetween={20}
-              slidesPerView={6}
+              slidesPerView={2}
+              breakpoints={{
+                768: {
+                  slidesPerView: 6,
+                },
+              }}
               className="py-4"
             >
               {categories.map((cat) => (
@@ -306,7 +327,7 @@ export default function HomePage() {
         </div>
         <div className="mt-[40px] p-6">
           {loading && (
-            <div className="grid grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               {Array(4)
                 .fill(0)
                 .map((_, idx) => (
@@ -324,7 +345,12 @@ export default function HomePage() {
             <Swiper
               modules={[Navigation]}
               spaceBetween={20}
-              slidesPerView={4}
+              slidesPerView={1}
+              breakpoints={{
+                768: {
+                  slidesPerView: 4,
+                },
+              }}
               className="py-4"
             >
               {products.map((prod) => (
@@ -409,7 +435,7 @@ export default function HomePage() {
         </div>
         <div className="mt-[40px] p-6">
           {loading && (
-            <div className="grid grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               {Array(4)
                 .fill(0)
                 .map((_, idx) => (
@@ -427,7 +453,12 @@ export default function HomePage() {
             <Swiper
               modules={[Navigation]}
               spaceBetween={20}
-              slidesPerView={4}
+              slidesPerView={1}
+              breakpoints={{
+                768: {
+                  slidesPerView: 4,
+                },
+              }}
               className="py-4"
             >
               {products.map((prod) => (
@@ -530,7 +561,7 @@ export default function HomePage() {
           </div>
         </div>
       </div>
-      <Outlet/>
+      <Outlet />
     </div>
   )
 }

@@ -21,6 +21,19 @@ export default function CartPage() {
     0
   );
 
+  const updateQuantity = (productId: number, quantity: number) => {
+    if (quantity < 1) return;
+
+    setCart(prev =>
+      prev.map(item =>
+        item.product.id === productId
+          ? { ...item, quantity }
+          : item
+      )
+    );
+  };
+
+
   useEffect(() => {
     loadCart()
   }, []);
@@ -58,6 +71,9 @@ export default function CartPage() {
                 type="number"
                 value={item.quantity}
                 min={1}
+                onChange={(e) =>
+                  updateQuantity(item.product.id, Number(e.target.value))
+                }
                 className="w-16 border rounded text-center py-1"
               />
             </div>
