@@ -83,7 +83,7 @@ export default function CartPage() {
           <button className="border px-6 py-2 rounded cursor-pointer"
             onClick={loadCart}
           >
-            Update Cart
+            Update Carts
           </button>
           <button className="border border-red-500 text-red-500 px-6 py-2 rounded cursor-pointer"
             onClick={async () => {
