@@ -1,4 +1,4 @@
-import { Product } from "../../api/api";
+
 type Product = {
   id: number;
   image: string;
@@ -7,6 +7,7 @@ type Product = {
   discountPrice?: number;
   quantity: number;
 };
+
 
 type ProductProps = {
   product: Product;
