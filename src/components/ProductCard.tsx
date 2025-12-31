@@ -1,8 +1,16 @@
 import { Product } from "../../api/api";
+type Product = {
+  id: number;
+  image: string;
+  productName: string;
+  price: number;
+  discountPrice?: number;
+  quantity: number;
+};
 
 type ProductProps = {
-    product: Product;
-  };
+  product: Product;
+};
 
   const api = import.meta.env.VITE_URL_PRODUCTS;
   

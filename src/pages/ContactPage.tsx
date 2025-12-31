@@ -1,57 +1,47 @@
-import redPhone from '../assets/images/redPhone.png'
-import redMail from '../assets/images/redMail.png'
- 
+import redPhone from '../assets/images/redPhone.png';
+import redMail from '../assets/images/redMail.png';
+
 const ContactPage = () => {
   return (
-      <div className='flex items-center justify-center gap-[40px] mb-[100px] mt-[50px]'>
+    <div className='px-4 md:px-20 py-12 md:py-24 flex flex-col md:flex-row gap-8 md:gap-16'>
 
-        <div className='w-[350px] h-[434px] border-[1px] border-[solid] border-[#00000029]
-        flex flex-col gap-[32px] items-center justify-center shadow-lg'>
-
-          <div className='flex flex-col gap-[24px]'>
-            <div className='flex gap-[16px] items-center'>
-              <img src={redPhone} alt="ddd" />
-              <h1 className='text-[20px] leading-[24px] font-bold'>Call To Us</h1>
-            </div>
-            <div className='flex flex-col gap-[12px]'>
-              <h1>We are available 24/7, 7 days a week.</h1>
-              <h1>Phone: +8801611112222</h1>
-            </div>
+      <div className='w-full md:w-1/3 border border-gray-300 rounded-lg shadow-lg p-6 flex flex-col gap-8'>
+        <div className='flex flex-col gap-4'>
+          <div className='flex items-center gap-3'>
+            <img src={redPhone} alt="phone" className='w-6 h-6 md:w-8 md:h-8'/>
+            <h2 className='text-lg md:text-xl font-bold'>Call To Us</h2>
           </div>
-          <div className='w-[270px] opacity-[50%] border-[1px] border-[#0000004D]'></div>
-          <div className='flex flex-col gap-[24px]'>
-            <div  className='flex gap-[16px] items-center'>
-              <img src={redMail} alt="sss" />
-              <h1 className='text-[20px] leading-[24px] font-bold'>Write To US</h1>
-            </div>
-            <div className='flex flex-col gap-[12px]'>
-              <h1>Fill out our form and we will contact <br/>
-              you within 24 hours.</h1>
-              <h1>Emails: customer@exclusive.com</h1>
-              <h1>Emails: support@exclusive.com</h1>
-            </div>
-          </div>
-
+          <p className='text-center md:text-left text-gray-700'>We are available 24/7, 7 days a week.</p>
+          <p className='text-center md:text-left font-medium'>Phone: +8801611112222</p>
         </div>
 
-        <div className='w-[780px] h-[432px] border-[1px] border-[solid] border-[#00000029] 
-        flex flex-col gap-[32px] rounded-[4px] shadow-lg p-[40px]'>
+        <div className='border-t border-gray-300 opacity-50'></div>
 
-          <div className='flex gap-[20px]'>
-            <input type="text" placeholder='Name' className='w-[220px] h-[56px] border-[1px] border-[#0000003B] rounded-[4px] pr-[12px] pl-[12px]'/>
-            <input type="text" placeholder='Email' className='w-[220px] h-[56px] border-[1px] border-[#0000003B] rounded-[4px] pr-[12px] pl-[12px]'/>
-            <input type="text" placeholder='Phone' className='w-[220px] h-[56px] border-[1px] border-[#0000003B] rounded-[4px] pr-[12px] pl-[12px]'/>
+        <div className='flex flex-col gap-4'>
+          <div className='flex items-center gap-3'>
+            <img src={redMail} alt="email" className='w-6 h-6 md:w-8 md:h-8'/>
+            <h2 className='text-lg md:text-xl font-bold'>Write To Us</h2>
           </div>
-
-          <textarea placeholder='Your Massage' className='w-[700px] h-[176px] border-[1px] border-[#0000003B] rounded-[4px] p-[16px]'></textarea>
-          <div className='flex items-center justify-end'>
-            <button className='w-[215px] h-[56px] border-[#DB4444] border-[1px] border-[#DB4444] bg-[#DB4444] text-white rounded-[4px]'>Send Massage</button>
-          </div>
-
+          <p className='text-center md:text-left text-gray-700'>
+            Fill out our form and we will contact you within 24 hours.
+          </p>
+          <p className='text-center md:text-left font-medium'>customer@exclusive.com</p>
+          <p className='text-center md:text-left font-medium'>support@exclusive.com</p>
         </div>
-
       </div>
+
+      <div className='w-full md:w-2/3 border border-gray-300 rounded-lg shadow-lg p-6 md:p-10 flex flex-col gap-6'>
+        <div className='flex flex-col md:flex-row gap-4 md:gap-5'>
+          <input type="text" placeholder='Name' className='w-full md:w-1/3 h-14 border border-gray-300 rounded px-3'/>
+          <input type="text" placeholder='Email' className='w-full md:w-1/3 h-14 border border-gray-300 rounded px-3'/>
+          <input type="text" placeholder='Phone' className='w-full md:w-1/3 h-14 border border-gray-300 rounded px-3'/>
+        </div>
+        <textarea placeholder='Your Message' className='w-full h-44 md:h-48 border border-gray-300 rounded px-4 py-3'></textarea>
+        <button className='w-full md:w-1/3 h-14 bg-red-500 text-white rounded font-semibold mx-auto md:mx-0'>Send Message</button>
+      </div>
+
+    </div>
   )
 }
 
-export default ContactPage
+export default ContactPage;
