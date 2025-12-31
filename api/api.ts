@@ -14,6 +14,14 @@ export type CartProduct = {
   };
 };
 
+export interface Product {
+  id: string;
+  productName: string;
+  price: number;
+  discountPrice?: number;
+  image: string;
+}
+
 export const GetTodo = async () => {
   try {
     const { data } = await axiosRequest.get(`/Product/get-products`);
@@ -34,12 +42,14 @@ export const GetCategory = async () => {
 
 export const getProductById = async (id: number) => {
   try {
-    const { data } = await axiosRequest.get(`${api}/get-product-by-id?id=${id}`);
+    const { data } = await axiosRequest.get(
+      `${api}/get-product-by-id?id=${id}`
+    );
     return data.data.product;
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
-}
+};
 export const AddToCart = async (productId: number) => {
   try {
     const { data } = await axiosRequest.post(
@@ -71,5 +81,21 @@ export const DeleteAllFromCart = async (): Promise<void> => {
     GetCart();
   } catch (error) {
     console.error(error);
+  }
+};
+
+export const getUserProfile = async ({ userName }: { userName: string }) => {
+  try {
+    const response = await axiosRequest.get(`/UserProfile/get-user-profiles`, {
+      params: {
+        UserName: userName,
+        PageNumber: 1,
+        PageSize: 10,
+      },
+    });
+    return response.data.data[0];
+  } catch (error) {
+    console.error(error);
+    throw error;
   }
 };

@@ -1,3 +1,4 @@
+import { Product } from "../../api/api";
 type Product = {
   id: number;
   image: string;

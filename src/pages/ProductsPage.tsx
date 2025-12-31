@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
-import { api, GetCategory, GetTodo } from "../../api/api";
+import ProductsFilter from "../components/ProductsFilter";
+import { AddToCart, api, GetCategory, GetTodo } from "../../api/api";
+import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import { Eye, Heart, Star } from "lucide-react";
 import { NavLink, Outlet } from "react-router-dom";
 import { useWishlistStore } from "../store/useWishlistStore";
-import ProductsFilter from "../components/ProductsFilter";
 
 type Product = {
   id: number;
@@ -19,10 +19,20 @@ type Product = {
 export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+  const [loading, setLoading] = useState(true);
+
   const toggleItem = useWishlistStore((s) => s.toggleItem);
   const isInWishlist = useWishlistStore((s) => s.isInWishlist);
+
+  const handleAddToCart = async (productId: number) => {
+    try {
+      await AddToCart(productId);
+      alert("Товар добавлен в корзину ✅");
+    } catch {
+      alert("Этот товар уже находится в корзине ❌");
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,8 +43,6 @@ export default function ProductsPage() {
         ]);
         setProducts(productsData);
         setCategories(categoriesData);
-      } catch (err) {
-        console.error(err);
       } finally {
         setLoading(false);
       }
@@ -46,7 +54,9 @@ export default function ProductsPage() {
     ? products.filter((p) => p.categoryId === selectedCategory)
     : products;
 
-  if (loading) return <p className="px-4 md:px-[135px] py-12">Loading products...</p>;
+  if (loading) {
+    return <p className="px-4 md:px-[135px] py-12">Loading products...</p>;
+  }
 
   return (
     <div className="pt-12 pb-12 px-4 md:px-[135px]">
@@ -68,44 +78,76 @@ export default function ProductsPage() {
                     {Math.round(100 - (prod.discountPrice / prod.price) * 100)}%
                   </div>
                 )}
+
                 <div className="absolute top-3 right-3 flex flex-col gap-2 z-10">
                   <button
                     onClick={() => toggleItem(prod)}
                     className="bg-white w-10 h-10 flex items-center justify-center rounded-full shadow"
                   >
-                    <Heart className={isInWishlist(prod.id) ? "fill-red-500 text-red-500" : "text-gray-400"} />
+                    <Heart
+                      className={
+                        isInWishlist(prod.id)
+                          ? "fill-red-500 text-red-500"
+                          : "text-gray-400"
+                      }
+                    />
                   </button>
+
                   <NavLink to="/productDetails" state={{ product: prod }}>
-                    <button className="bg-white w-10 h-10 flex items-center justify-center rounded-full shadow cursor-pointer">
+                    <button className="bg-white w-10 h-10 flex items-center justify-center rounded-full shadow">
                       <Eye size={18} />
                     </button>
                   </NavLink>
                 </div>
 
                 <div className="flex justify-center py-6">
-                  <img src={`${api}/images/${prod.image}`} alt={prod.productName} className="w-[140px] sm:w-[180px] h-[140px] sm:h-[180px] object-contain" />
+                  <img
+                    src={`${api}/images/${prod.image}`}
+                    alt={prod.productName}
+                    className="w-[140px] sm:w-[180px] h-[140px] sm:h-[180px] object-contain"
+                  />
                 </div>
 
-                <Button variant="contained" color="inherit" className="absolute left-0 bottom-0 w-full opacity-0 group-hover:opacity-100 transition">
+                <Button
+                  variant="contained"
+                  color="inherit"
+                  onClick={() => handleAddToCart(prod.id)}
+                  className="absolute left-0 bottom-0 w-full opacity-0 group-hover:opacity-100 transition"
+                >
                   Add To Cart
                 </Button>
               </div>
 
               <div className="flex flex-col gap-2 mt-3 text-center md:text-left">
-                <p className="text-[14px] sm:text-[16px] font-medium">{prod.productName}</p>
+                <p className="text-[14px] sm:text-[16px] font-medium">
+                  {prod.productName}
+                </p>
+
                 <div className="flex items-center gap-2 justify-center md:justify-start">
-                  <p className="text-red-500 text-lg font-semibold">${prod.price}</p>
-                  {prod.discountPrice && <p className="text-gray-400 line-through">${prod.discountPrice}</p>}
+                  <p className="text-red-500 text-lg font-semibold">
+                    ${prod.price}
+                  </p>
+                  {prod.discountPrice && (
+                    <p className="text-gray-400 line-through">
+                      ${prod.discountPrice}
+                    </p>
+                  )}
                 </div>
+
                 <div className="flex items-center gap-2 justify-center md:justify-start">
-                  <div className="flex text-yellow-500 gap-[3px] sm:gap-[5px]"><Star /><Star /><Star /><Star /><Star /></div>
-                  <p className="text-gray-500 text-sm">({prod.quantity})</p>
+                  <div className="flex text-yellow-500 gap-[5px]">
+                    <Star /><Star /><Star /><Star /><Star />
+                  </div>
+                  <p className="text-gray-500 text-sm">
+                    ({prod.quantity})
+                  </p>
                 </div>
               </div>
             </div>
           ))}
         </div>
       </div>
+
       <Outlet />
     </div>
   );
