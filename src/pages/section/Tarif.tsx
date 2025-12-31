@@ -5,7 +5,7 @@ import delivery2 from '../../assets/images/Services (8).png'
 export default function Tarif() {
     return (
         <div>
-            <div className='flex items-center justify-center gap-[88px]'>
+           <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-[88px]">
                 <div className='flex items-center flex-col gap-[24px]'>
                     <img src={delivery} alt="sss" />
                     <div className='flex items-center flex-col gap-[8px]'>

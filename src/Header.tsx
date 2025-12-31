@@ -81,10 +81,12 @@ export default function Header() {
                 <div className="flex items-center gap-4">
                     <input
                         type="text"
-                        placeholder="What are you looking for?"
+                        placeholder="Looking for?"
                         className="hidden md:block border rounded-md px-3 py-1 text-sm outline-none"
                     />
-                    <FavoriteBorderIcon />
+                    <button className="cursor-pointer" onClick={() => navigate("/Wishlist")}>
+                        <FavoriteBorderIcon />
+                    </button>
                     <div>
                         <button onClick={() => navigate("/cart")} className="cursor-pointer"><ShoppingCartOutlinedIcon /></button>
                     </div>
