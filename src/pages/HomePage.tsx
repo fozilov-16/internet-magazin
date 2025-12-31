@@ -70,7 +70,7 @@ export default function HomePage() {
   return (
     <div className="mx-auto max-w-7xl py-9">
       <div className="md:flex items-center justify-around">
-        <div>
+        <div className='hidden md:block'>
           {categories?.slice(0, 9).map((cat) => {
             return (
               <div className="text-sm flex gap-10 flex-wrap p-3 md:block">
@@ -80,7 +80,7 @@ export default function HomePage() {
           })
           }
         </div>
-        <div>
+        <div className='md: mt-[-35px]'>
           <Swiper
             modules={[Pagination, Autoplay]}
             pagination={{ clickable: true }}
@@ -309,7 +309,9 @@ export default function HomePage() {
             </Swiper>
           )}
           <div className='mt-[32px] flex justify-center'>
-            <button className=' bg-[#DB4444] cursor-pointer rounded-[4px] px-[48px] py-[16px] text-white'>View All Products</button>
+            <NavLink to={"/products"}>
+              <button className=' bg-[#DB4444] cursor-pointer rounded-[4px] px-[48px] py-[16px] text-white'>View All Products</button>
+            </NavLink>
           </div>
         </div>
       </div>
