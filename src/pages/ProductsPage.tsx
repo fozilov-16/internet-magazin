@@ -1,5 +1,5 @@
 import ProductsFilter from "../components/ProductsFilter";
-import { api, GetCategory, GetTodo } from "../../api/api";
+import { AddToCart, api, GetCategory, GetTodo } from "../../api/api";
 import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import { Eye, Heart, Star } from "lucide-react";
@@ -19,6 +19,17 @@ export default function ProductsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [categories, setCategories] = useState<any[]>([]);
+
+  const handleAddToCart = async (productId: number) => {
+    try {
+      await AddToCart(productId);
+      alert("Товар добавлен в корзину ✅");
+    } catch (error) {
+      alert("Этот товар уже находится в корзине ❌");
+      console.error(error);
+    }
+  };
+
 
 
   useEffect(() => {
@@ -62,10 +73,10 @@ export default function ProductsPage() {
       <div className="flex gap-[60px]">
         <ProductsFilter />
 
-        <div className="flex flex-col gap-[32px]">  
+        <div className="flex flex-col gap-[32px]">
 
           <div className="flex flex-wrap gap-[30px] justify-center">
-            {products?.slice(0,3).map((prod) => (
+            {products?.slice(0, 3).map((prod) => (
               <div key={prod.id} className="w-[260px]">
                 <div className="bg-[#F5F5F5] p-4 rounded-xl relative group">
 
@@ -77,7 +88,7 @@ export default function ProductsPage() {
                       %
                     </div>
                   )}
-                  
+
                   <div className="absolute top-3 right-3 flex flex-col gap-2 z-10">
                     <button className="bg-white w-10 h-10 flex items-center justify-center rounded-full shadow cursor-pointer ">
                       <Heart size={18} />
@@ -88,7 +99,7 @@ export default function ProductsPage() {
                       </button>
                     </NavLink>
                   </div>
-  
+
                   <div className="flex justify-center py-6">
                     <img
                       src={`${api}/images/${prod.image}`}
@@ -96,21 +107,22 @@ export default function ProductsPage() {
                       className="w-[180px] h-[180px] object-contain"
                     />
                   </div>
-  
+
                   <Button
                     variant="contained"
                     color="inherit"
+                    onClick={() => handleAddToCart(prod.id)}
                     className="absolute left-0 bottom-0 w-full opacity-0 group-hover:opacity-100 transition"
                   >
                     Add To Cart
                   </Button>
                 </div>
-  
+
                 <div className="flex flex-col gap-2 mt-3">
                   <p className="text-[16px] font-medium">
                     {prod.productName}
                   </p>
-  
+
                   <div className="flex items-center gap-3">
                     <p className="text-red-500 text-lg font-semibold">
                       ${prod.price}
@@ -119,22 +131,22 @@ export default function ProductsPage() {
                       ${prod.discountPrice}
                     </p>
                   </div>
-  
-                <div className="flex items-center gap-2">
-                  <div className="flex text-yellow-500 gap-[5px]">
-                    <Star /><Star /><Star /><Star /><Star />
+
+                  <div className="flex items-center gap-2">
+                    <div className="flex text-yellow-500 gap-[5px]">
+                      <Star /><Star /><Star /><Star /><Star />
+                    </div>
+                    <p className="text-gray-500 text-sm">
+                      ({prod.quantity})
+                    </p>
                   </div>
-                  <p className="text-gray-500 text-sm">
-                    ({prod.quantity})
-                  </p>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
 
-        <div className="flex flex-wrap gap-[30px] justify-center">
-            {products?.slice(0,6).map((prod) => (
+          <div className="flex flex-wrap gap-[30px] justify-center">
+            {products?.slice(0, 6).map((prod) => (
               <div key={prod.id} className="w-[260px]">
                 <div className="bg-[#F5F5F5] p-4 rounded-xl relative group">
 
@@ -146,7 +158,7 @@ export default function ProductsPage() {
                       %
                     </div>
                   )}
-                  
+
                   <div className="absolute top-3 right-3 flex flex-col gap-2 z-10">
                     <button className="bg-white w-10 h-10 flex items-center justify-center rounded-full shadow">
                       <Heart size={18} />
@@ -157,7 +169,7 @@ export default function ProductsPage() {
                       </button>
                     </NavLink>
                   </div>
-  
+
                   <div className="flex justify-center py-6">
                     <img
                       src={`${api}/images/${prod.image}`}
@@ -165,7 +177,7 @@ export default function ProductsPage() {
                       className="w-[180px] h-[180px] object-contain"
                     />
                   </div>
-  
+
                   <Button
                     variant="contained"
                     color="inherit"
@@ -174,12 +186,12 @@ export default function ProductsPage() {
                     Add To Cart
                   </Button>
                 </div>
-  
+
                 <div className="flex flex-col gap-2 mt-3">
                   <p className="text-[16px] font-medium">
                     {prod.productName}
                   </p>
-  
+
                   <div className="flex items-center gap-3">
                     <p className="text-red-500 text-lg font-semibold">
                       ${prod.price}
@@ -190,22 +202,22 @@ export default function ProductsPage() {
                       </p>
                     )}
                   </div>
-  
-                <div className="flex items-center gap-2">
-                  <div className="flex text-yellow-500 gap-[5px]">
-                    <Star /><Star /><Star /><Star /><Star />
+
+                  <div className="flex items-center gap-2">
+                    <div className="flex text-yellow-500 gap-[5px]">
+                      <Star /><Star /><Star /><Star /><Star />
+                    </div>
+                    <p className="text-gray-500 text-sm">
+                      ({prod.quantity})
+                    </p>
                   </div>
-                  <p className="text-gray-500 text-sm">
-                    ({prod.quantity})
-                  </p>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
         </div>
       </div>
-      <Outlet/>
+      <Outlet />
     </div>
   );
 }
