@@ -59,14 +59,18 @@ export const DeleteAllFromCart = async (): Promise<void> => {
   await axiosRequest.delete(`/Cart/clear-cart`);
 };
 
-export const getUserProfile = async (userName: string) => {
-  const { data } = await axiosRequest.get(`/UserProfile/get-user-profiles`, {
-    params: {
-      UserName: userName,
-      PageNumber: 1,
-      PageSize: 10,
-    },
-  });
-
-  return data.data[0];
+export const getUserProfile = async ({ userName }: { userName: string }) => {
+  try {
+    const response = await axiosRequest.get(`/UserProfile/get-user-profiles`, {
+      params: {
+        UserName: userName,
+        PageNumber: 1,
+        PageSize: 10,
+      },
+    });
+    return response.data.data[0];
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
