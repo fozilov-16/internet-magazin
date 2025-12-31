@@ -36,6 +36,7 @@ export default function LogInPage() {
       setLoading(true);
       let { data } = await axiosRequest.post("/Account/login", obj);
       SaveToken(data.data)
+      localStorage.setItem("userName", obj.userName);
       login(data.data)
       navigate("/home");
     } catch (error) {
@@ -105,7 +106,6 @@ export default function LogInPage() {
                 ? "border-red-500"
                 : "border-gray-300"}`}
             />
-
             {errors.password && touched.password && (
               <p className="text-xs text-red-500 mt-1">
                 {errors.password}

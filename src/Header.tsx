@@ -90,7 +90,7 @@ export default function Header() {
                     <div>
                         <button onClick={() => navigate("/cart")} className="cursor-pointer"><ShoppingCartOutlinedIcon /></button>
                     </div>
-                    <PersonOutlineOutlinedIcon />
+                    <button onClick={() => navigate("/account")} className="cursor-pointer"><PersonOutlineOutlinedIcon /></button>
                 </div>
             </div>
             <Drawer anchor="left" open={open} onClose={toggleDrawer(false)}>

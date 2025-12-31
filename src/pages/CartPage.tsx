@@ -141,7 +141,9 @@ export default function CartPage() {
             <span>${subtotal}</span>
           </div>
 
-          <button className="w-full bg-red-500 text-white py-3 rounded">
+          <button className="w-full bg-red-500 text-white py-3 rounded cursor-pointer"
+          onClick={() => navigate('/chekout')}
+          >
             Proceed to checkout
           </button>
         </div>
