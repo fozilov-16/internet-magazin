@@ -1,5 +1,5 @@
 import ProductsFilter from "../components/ProductsFilter";
-import { api, GetCategory, GetTodo } from "../../api/api";
+import { AddToCart, api, GetCategory, GetTodo } from "../../api/api";
 import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import { Eye, Heart, Star } from "lucide-react";
@@ -20,6 +20,18 @@ export default function ProductsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [categories, setCategories] = useState<any[]>([]);
+
+  const handleAddToCart = async (productId: number) => {
+    try {
+      await AddToCart(productId);
+      alert("Товар добавлен в корзину ✅");
+    } catch (error) {
+      alert("Этот товар уже находится в корзине ❌");
+      console.error(error);
+    }
+  };
+
+
   const hasHydrated = useWishlistStore((s) => s.hasHydrated);
   const toggleItem = useWishlistStore((s) => s.toggleItem);
   const isInWishlist = useWishlistStore((s) => s.isInWishlist);
@@ -105,6 +117,7 @@ export default function ProductsPage() {
                   <Button
                     variant="contained"
                     color="inherit"
+                    onClick={() => handleAddToCart(prod.id)}
                     className="absolute left-0 bottom-0 w-full opacity-0 group-hover:opacity-100 transition"
                   >
                     Add To Cart
@@ -192,10 +205,9 @@ export default function ProductsPage() {
               </div>
             ))}
           </div>
-
         </div>
       </div>
-      <Outlet/>
+      <Outlet />
     </div>
   );
 }

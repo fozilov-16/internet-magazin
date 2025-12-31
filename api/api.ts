@@ -14,6 +14,14 @@ export type CartProduct = {
   };
 };
 
+export interface Product {
+  id: string;
+  productName: string;
+  price: number;
+  discountPrice?: number;
+  image: string;
+}
+
 export const GetTodo = async () => {
   try {
     const { data } = await axiosRequest.get(`/Product/get-products`);
@@ -76,7 +84,7 @@ export const DeleteAllFromCart = async (): Promise<void> => {
   }
 };
 
-export const getUserProfile = async ({ userName }) => {
+export const getUserProfile = async ({ userName }: { userName: string }) => {
   try {
     const response = await axiosRequest.get(`/UserProfile/get-user-profiles`, {
       params: {

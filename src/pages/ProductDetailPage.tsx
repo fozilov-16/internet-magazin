@@ -1,6 +1,6 @@
 import { useLocation, useNavigate, NavLink } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { GetTodo } from '../../api/api';
+import { AddToCart, GetTodo } from '../../api/api';
 import redrec from '../assets/images/redRec.png';
 import delivery from '../assets/images/icon-delivery.png';
 import return1 from '../assets/images/Icon-return.png';
@@ -29,6 +29,17 @@ const ProductDetailPage = () => {
   if (!product) return <div className="p-4">Product not found</div>;
 
   const { productName, image, price, discountPrice } = product;
+
+  const handleAddToCart = async (productId: number) => {
+    try {
+      await AddToCart(productId);
+      alert("Товар добавлен в корзину ✅");
+    } catch (error) {
+      alert("Этот товар уже находится в корзине ❌");
+      console.error(error);
+    }
+  };
+
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -136,32 +147,39 @@ const ProductDetailPage = () => {
                   </NavLink>
                 </div>
 
-                <div className="flex justify-center py-4 sm:py-6">
+                <div className="flex justify-center py-6">
                   <img
                     src={`${api}/images/${prod.image}`}
                     alt={prod.productName}
-                    className="w-[120px] sm:w-[180px] md:w-[180px] h-[120px] sm:h-[180px] object-contain"
+                    className="w-[180px] h-[180px] object-contain"
                   />
                 </div>
 
                 <Button
                   type="primary"
+                  onClick={() => handleAddToCart(prod.id)}
                   className="absolute left-0 bottom-0 w-full opacity-0 group-hover:opacity-100 transition"
                 >
                   Add To Cart
                 </Button>
               </div>
 
-              <div className="flex flex-col gap-2 mt-3 text-center sm:text-left">
-                <p className="text-[14px] sm:text-[16px] font-medium">{prod.productName}</p>
-                <div className="flex items-center gap-2 justify-center sm:justify-start">
-                  <p className="text-red-500 text-lg font-semibold">${prod.price}</p>
-                  {prod.discountPrice && (
-                    <p className="text-gray-400 line-through">${prod.discountPrice}</p>
-                  )}
+              <div className="flex flex-col gap-2 mt-3">
+                <p className="text-[16px] font-medium">
+                  {prod.productName}
+                </p>
+
+                <div className="flex items-center gap-3">
+                  <p className="text-red-500 text-lg font-semibold">
+                    ${prod.price}
+                  </p>
+                  <p className="text-gray-400 line-through">
+                    ${prod.discountPrice}
+                  </p>
                 </div>
-                <div className="flex items-center gap-1 justify-center sm:justify-start">
-                  <div className="flex text-yellow-500 gap-[3px] sm:gap-[5px]">
+
+                <div className="flex items-center gap-2">
+                  <div className="flex text-yellow-500 gap-[5px]">
                     <Star /><Star /><Star /><Star /><Star />
                   </div>
                   <p className="text-gray-500 text-sm">({prod.quantity})</p>
