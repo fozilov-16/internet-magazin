@@ -15,7 +15,7 @@ export type CartProduct = {
 };
 
 export interface Product {
-  id: string;
+  id: number;
   productName: string;
   price: number;
   discountPrice?: number;
@@ -23,42 +23,27 @@ export interface Product {
 }
 
 export const GetTodo = async () => {
-  try {
-    const { data } = await axiosRequest.get(`/Product/get-products`);
-    return data.data.products;
-  } catch (error) {
-    throw error;
-  }
+  const { data } = await axiosRequest.get(`/Product/get-products`);
+  return data.data.products;
 };
 
 export const GetCategory = async () => {
-  try {
-    const { data } = await axiosRequest.get(`/Category/get-categories`);
-    return data.data;
-  } catch (error) {
-    throw error;
-  }
+  const { data } = await axiosRequest.get(`/Category/get-categories`);
+  return data.data;
 };
 
 export const getProductById = async (id: number) => {
-  try {
-    const { data } = await axiosRequest.get(
-      `${api}/get-product-by-id?id=${id}`
-    );
-    return data.data.product;
-  } catch (error) {
-    console.error(error);
-  }
+  const { data } = await axiosRequest.get(
+    `/Product/get-product-by-id?id=${id}`
+  );
+  return data.data.product;
 };
+
 export const AddToCart = async (productId: number) => {
-  try {
-    const { data } = await axiosRequest.post(
-      `/Cart/add-product-to-cart?id=${productId}`
-    );
-    return data;
-  } catch (error) {
-    throw error;
-  }
+  const { data } = await axiosRequest.post(
+    `/Cart/add-product-to-cart?id=${productId}`
+  );
+  return data;
 };
 
 export const GetCart = async (): Promise<CartProduct[]> => {
@@ -67,35 +52,21 @@ export const GetCart = async (): Promise<CartProduct[]> => {
 };
 
 export const DeleteProductFromCart = async (id: number) => {
-  try {
-    await axiosRequest.delete(`/Cart/delete-product-from-cart?id=${id}`);
-    GetCart();
-  } catch (error) {
-    console.error(error);
-  }
+  await axiosRequest.delete(`/Cart/delete-product-from-cart?id=${id}`);
 };
 
 export const DeleteAllFromCart = async (): Promise<void> => {
-  try {
-    await axiosRequest.delete(`/Cart/clear-cart`);
-    GetCart();
-  } catch (error) {
-    console.error(error);
-  }
+  await axiosRequest.delete(`/Cart/clear-cart`);
 };
 
-export const getUserProfile = async ({ userName }: { userName: string }) => {
-  try {
-    const response = await axiosRequest.get(`/UserProfile/get-user-profiles`, {
-      params: {
-        UserName: userName,
-        PageNumber: 1,
-        PageSize: 10,
-      },
-    });
-    return response.data.data[0];
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
+export const getUserProfile = async (userName: string) => {
+  const { data } = await axiosRequest.get(`/UserProfile/get-user-profiles`, {
+    params: {
+      UserName: userName,
+      PageNumber: 1,
+      PageSize: 10,
+    },
+  });
+
+  return data.data[0];
 };
