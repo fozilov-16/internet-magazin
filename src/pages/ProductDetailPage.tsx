@@ -31,8 +31,6 @@ const ProductDetailPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  if (!product) return <div>Product not found</div>;
-
 
   const { productName, image, price, discountPrice } = product;
 

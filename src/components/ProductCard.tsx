@@ -1,3 +1,5 @@
+import { Product } from "../../api/api";
+
 type ProductProps = {
     product: Product;
   };
